@@ -15,11 +15,35 @@ const appRouter = router({
         .mutation( async (opts) => {
              const title = opts.input.title;
              const desc = opts.input.description;
-
+             console.log(title , desc);
+            console.log("here");
             return {
                 id:"11",
             };
-        } )
+        } ),
+    getTodo : publicProcedure
+        .query( async(opts)=> {
+            return [{
+                id:"11",
+                description: "desc",
+                title: "title"
+            }];
+        }),
+    signUp: publicProcedure
+        .input(z.object({
+            email : z.string(),
+            password : z.string().min(2),
+        }))
+        .mutation( async(opts)=>{
+            const email = opts.input.email;
+            const password = opts.input.password;
+            console.log(email , password);
+            console.log("signup");
+            const token = "eternal_token";
+            return {
+                token,
+            };
+        })
 });
 
 const server = createHTTPServer({
