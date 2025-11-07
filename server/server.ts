@@ -12,6 +12,9 @@ const todoInputType = z.object({
 const appRouter = router({
     createTodo : publicProcedure
         .input(todoInputType)
+        .output(z.object({
+            id : z.string()
+        }))
         .mutation( async (opts) => {
             const username = opts.ctx.username;
             console.log("Username from context: " + username);
