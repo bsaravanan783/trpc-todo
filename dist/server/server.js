@@ -20,6 +20,8 @@ const appRouter = (0, trpc_1.router)({
     createTodo: trpc_1.publicProcedure
         .input(todoInputType)
         .mutation((opts) => __awaiter(void 0, void 0, void 0, function* () {
+        const username = opts.ctx.username;
+        console.log("Username from context: " + username);
         const title = opts.input.title;
         const desc = opts.input.description;
         console.log(title, desc);
@@ -54,5 +56,16 @@ const appRouter = (0, trpc_1.router)({
 });
 const server = (0, standalone_1.createHTTPServer)({
     router: appRouter,
+    createContext(opts) {
+        const header = opts.req.headers["authorization"];
+        console.log("Header: " + header);
+        if (header) {
+            // res username 
+            // or send undefined
+        }
+        return {
+            username: "Saravanan",
+        };
+    }
 });
 server.listen(3000);

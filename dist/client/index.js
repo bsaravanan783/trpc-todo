@@ -17,15 +17,21 @@ const trpc = (0, client_1.createTRPCClient)({
     links: [
         (0, client_1.httpBatchLink)({
             url: 'http://localhost:3000',
+            headers() {
+                // const token = localStorage.getItem("token");
+                return {
+                    authorization: "token"
+                };
+            },
         }),
     ],
 });
 function main() {
     return __awaiter(this, void 0, void 0, function* () {
         trpc.createTodo.mutate({ title: "helli", description: "thor" });
-        const data = yield trpc.signUp.mutate({
-            email: "snjh",
-            password: "kjnhfkgd",
+        const data = yield trpc.createTodo.mutate({
+            title: "snjh",
+            description: "kjnhfkgd",
         });
         console.log(JSON.stringify(data) + " rendered from client");
     });

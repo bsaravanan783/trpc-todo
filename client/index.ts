@@ -9,6 +9,12 @@ const trpc = createTRPCClient<AppRouter>({
   links: [
     httpBatchLink({
       url: 'http://localhost:3000',
+      headers(){
+        // const token = localStorage.getItem("token");
+        return {
+          authorization : "token"
+        }
+      },
     }),
   ],
 });
@@ -17,9 +23,9 @@ const trpc = createTRPCClient<AppRouter>({
 
  async function main(){
    trpc.createTodo.mutate({ title :"helli" , description: "thor"});
-    const data = await trpc.signUp.mutate({
-      email:"snjh",
-      password:"kjnhfkgd",
+    const data = await trpc.createTodo.mutate({
+      title:"snjh",
+      description:"kjnhfkgd",
     });
     
     console.log(JSON.stringify(data) + " rendered from client");

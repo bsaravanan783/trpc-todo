@@ -13,9 +13,11 @@ const appRouter = router({
     createTodo : publicProcedure
         .input(todoInputType)
         .mutation( async (opts) => {
-             const title = opts.input.title;
-             const desc = opts.input.description;
-             console.log(title , desc);
+            const username = opts.ctx.username;
+            console.log("Username from context: " + username);
+            const title = opts.input.title;
+            const desc = opts.input.description;
+            console.log(title , desc);
             console.log("here");
             return {
                 id:"11",
@@ -48,6 +50,17 @@ const appRouter = router({
 
 const server = createHTTPServer({
   router: appRouter,
+  createContext(opts){
+    const header = opts.req.headers["authorization"];
+    console.log("Header: " + header);
+    if(header){
+        // res username 
+        // or send undefined
+    }
+    return {
+        username : "Saravanan",
+    };
+  }
 });
 
 server.listen(3000);
